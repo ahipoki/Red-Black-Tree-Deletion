@@ -45,28 +45,28 @@ void RBT::Insert(Node* &h, Node* n){
   }
 }
 
-void RBT::Search(int in){//Enter a number and return whether it is in the tree
-  return Search(root, n);
+bool RBT::Search(int in){//Enter a number and return whether it is in the tree
+  return Search(root, in);
 }
 
 bool RBT::Search(Node* h, int d){
   if (!h){
     return false;
   }
-  if (h->getKey() == n){
+  if (h->getKey() == d){
     return true;
   }
-  if (n < h->getKey()){
+  if (d < h->getKey()){
     if (h->getLeft() == NULL){
       return false;
     }
-    return Search(h->getLeft(), n);
+    return Search(h->getLeft(), d);
   }
   else{
     if (h->getRight() == NULL){
       return false;
     }
-    return Search(h->getRight(), n);
+    return Search(h->getRight(), d);
   }
 }
 
@@ -76,7 +76,7 @@ void RBT::RemoveNode(int in){//Remove a particular number. Update the tree.
   }
 }
 
-void RBT::RemoveNode(Node* &h, Node* n){
+bool RBT::RemoveNode(Node* &h, int n){
   if (h == NULL){
     cout<<"Empty tree or node not found."<<endl;
     return false;
