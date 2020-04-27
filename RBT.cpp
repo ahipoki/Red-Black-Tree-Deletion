@@ -45,11 +45,11 @@ void RBT::Insert(Node* &h, Node* n){
   }
 }
 
-void RBT::Search(int){
+void RBT::Search(){
   
 }
 
-void RBT::Search(){
+void RBT::Search(Node* h, int d){
   
 }
 
