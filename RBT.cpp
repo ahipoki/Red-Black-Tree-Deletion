@@ -45,6 +45,22 @@ void RBT::Insert(Node* &h, Node* n){
   }
 }
 
+void RBT::Search(int){
+  
+}
+
+void RBT::Search(){
+  
+}
+
+void RBT::RemoveNode(int){
+  
+}
+
+void RBT::RemoveNode(Node* &h, Node* n){
+  
+}
+
 void RBT::fixTree(Node* n){
   if (n == NULL){
     return;
