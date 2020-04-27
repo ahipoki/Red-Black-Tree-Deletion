@@ -45,7 +45,7 @@ void RBT::Insert(Node* &h, Node* n){
   }
 }
 
-void RBT::Search(){//Enter a number and return whether it is in the tree
+void RBT::Search(int in){//Enter a number and return whether it is in the tree
   
 }
 
@@ -53,7 +53,7 @@ void RBT::Search(Node* h, int d){
   
 }
 
-void RBT::RemoveNode(int){//Remove a particular number. Update the tree.
+void RBT::RemoveNode(int in){//Remove a particular number. Update the tree.
   
 }
 
