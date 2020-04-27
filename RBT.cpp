@@ -54,11 +54,111 @@ void RBT::Search(Node* h, int d){
 }
 
 void RBT::RemoveNode(int in){//Remove a particular number. Update the tree.
-  
+  if (RemoveNode(root, in)){
+    cout<<"Node deleted"<<endl;
+  }
 }
 
 void RBT::RemoveNode(Node* &h, Node* n){
-  
+  if (h == NULL){
+    cout<<"Empty tree or node not found."<<endl;
+    return false;
+  }
+  if (h->getKey() == n){
+    if (h->getLeft() == NULL && h->getRight() == NULL){
+      if (h->getParent() == NULL){
+        Node* temp = h;
+        h = NULL;
+        delete temp;
+        return true;
+      }
+      if (h == h->getParent()->getLeft()){
+        h->getParent()->setLeft(NULL);
+      }
+      else{
+        h->getParent()->setRight(NULL);
+      }
+      delete h;
+    }
+    else if (h->getLeft() == NULL){
+      if (h->getParent() == NULL){
+        Node* temp = h;
+        h = h->getRight();
+        h->setParent(NULL);
+        delete temp;
+        return true;
+      }
+      if (h == h->getParent()->getLeft()){
+        h->getParent()->setLeft(NULL);
+      }
+      else{
+        h->getParent()->setRight(NULL);
+      }
+      delete h;
+    }
+    else if (h->getLeft() == NULL){
+      if (h->getParent() == NULL){
+        Node* temp = h;
+        h = h->getRight();
+        h->setParent(NULL);
+        delete temp;
+        return true;
+      }
+      Node* Right = h->getRight();
+      if (h == h->getParent()->getLeft()){
+        h->getParent()->setLeft(Right);
+      }
+      else{
+        h->getParent()->setRight(Right);
+      }
+      Right->setParent(h->getParent());
+      delete h;
+    }
+    else if (h->getRight() == NULL){
+      if (h->getParent() == NULL){
+        Node* temp = h;
+        h = h->getLeft();
+        h->setParent(NULL);
+        delete temp;
+        return true;
+      }
+      Node* Left = h->getLeft();
+      if (h == h->getParent()->getLeft()){
+        h->getParent()->setLeft(Left);
+      }
+      else{
+        h->getParent()->setRight(Left);
+        Left->setParent(h->getParent());
+        delete h;
+      }
+    }
+    else{
+      Node* temp = h->getRight();
+      while (temp->getLeft()){
+        temp = temp->getLeft();
+      }
+      int key = temp->getKey();
+      RemoveNode(temp, key);
+      h->setKey(temp->getKey());
+    }
+    return true;
+  }
+  if (n < h->getKey()){
+    if (h->getLeft() == NULL){
+      cout<<"Node not found"<<endl;
+      return false;
+    }
+    Node* t = h->getLeft();
+    return RemoveNode(t, n);
+  }
+  else{
+    if (h->getRight() == NULL){
+      cout<<"Node not found"<<endl;
+      return false;
+    }
+    Node* t = h->getRight();
+    return RemoveNode(t, n);
+  }
 }
 
 void RBT::fixTree(Node* n){
