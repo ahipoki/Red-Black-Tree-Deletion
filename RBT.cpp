@@ -46,11 +46,28 @@ void RBT::Insert(Node* &h, Node* n){
 }
 
 void RBT::Search(int in){//Enter a number and return whether it is in the tree
-  
+  return Search(root, n);
 }
 
-void RBT::Search(Node* h, int d){
-  
+bool RBT::Search(Node* h, int d){
+  if (!h){
+    return false;
+  }
+  if (h->getKey() == n){
+    return true;
+  }
+  if (n < h->getKey()){
+    if (h->getLeft() == NULL){
+      return false;
+    }
+    return Search(h->getLeft(), n);
+  }
+  else{
+    if (h->getRight() == NULL){
+      return false;
+    }
+    return Search(h->getRight(), n);
+  }
 }
 
 void RBT::RemoveNode(int in){//Remove a particular number. Update the tree.
