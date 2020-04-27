@@ -117,9 +117,14 @@ void PrintTree(RBT* rbt){
 }
 
 void Search(RBT* rbt){
-  
+  rbt->Search();
 }
 
 void RemoveNode(RBT* rbt){
-  
+  int key;
+  cout<<"What number do you want to remove from the tree?"<<endl;
+  cin>>key;
+  cin.clear();
+  cin.ignore(999, '\n');
+  rbt->RemoveNode(key);
 }
