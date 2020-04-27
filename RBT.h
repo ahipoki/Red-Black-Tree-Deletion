@@ -7,7 +7,7 @@ class RBT{
     RBT();
     void Insert(int);
     void PrintTree();
-    void Search();
+    void Search(int);
     void RemoveNode(int);
     ~RBT();
   private:
