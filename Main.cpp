@@ -99,13 +99,13 @@ void Read(RBT* rbt){
     if (line[i] == ' '){
       if (strlen(f) > 0){
         rbt->Insert(strToInt(f));
-        f = new char[strlen(line)+1]();
-        ind = 0;
       }
-      else{
-        if (isdigit(line[i])){
-          f[ind++] = line[i];
-        }
+      f = new char[strlen(line)+1]();
+      ind = 0;
+    }
+    else{
+      if (isdigit(line[i])){
+        f[ind++] = line[i];
       }
     }
   }
