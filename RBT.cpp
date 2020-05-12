@@ -70,85 +70,164 @@ bool RBT::Search(Node* h, int d){
   }
 }
 
-void RBT::RemoveNode(int in){//Remove a particular number. Update the tree.
+void RBT::RemoveNode(int in){
   if (RemoveNode(root, in)){
     cout<<"Node deleted"<<endl;
   }
 }
 
 bool RBT::RemoveNode(Node* &h, int n){
-  if (h == NULL){
-    cout<<"Empty tree or node not found."<<endl;
+  if (h == NULL) {
     return false;
   }
-  if (n < h->getKey()){
-    Node* temp = h->getLeft();
+  if (n < h -> getKey()) {
+    Node* temp = h -> getLeft();
     return RemoveNode(temp, n);
   }
-  if (n > h->getKey()){
-    Node* temp = h->getRight();
+  if (n > h -> getKey()) {
+    Node* temp = h -> getRight();
     return RemoveNode(temp, n);
   }
   Node* child = NULL;
-  if (h->getLeft() != NULL && h->getRight() != NULL){
-    child = h->getRight();
-    while (child->getLeft()){
-      child = child->getLeft();
+  if (h -> getLeft() != NULL && h -> getRight() != NULL) {
+    child = h -> getRight();
+    while (child -> getLeft()){
+      child = child -> getLeft();
     }
-    h->setKey(child->getKey());
-    RemoveNode(child, child->getKey());
+    h -> setKey(child -> getKey());
+    RemoveNode(child, child -> getKey());
   }
-  else if (h->getLeft() != NULL || h->getRight() != NULL){
-    child = (h->getRight() == NULL ? h->getLeft() : h->getRight());
-    bool bothAreBlack = (!child->isRed() && !h->isRed());
-    if (root == NULL){
-      h->setKey(child->getKey());
-      h->setRight(NULL);
-      h->setLeft(NULL);
+  else if (h -> getLeft() != NULL || h -> getRight() != NULL) {
+    child = (h -> getRight() == NULL ? h -> getLeft() : h -> getRight());
+    bool bothAreBlack = (!child -> isRed() && !h -> isRed());
+    if (root == h) {
+      h -> setKey(child -> getKey());
+      h -> setRight(NULL);
+      h -> setLeft(NULL);
       delete child;
     }
-    else{
-      if (h == h->getParent()->getLeft()){
-        h->getParent()->setLeft(child);
+    else {
+      if (h == h -> getParent() -> getLeft()) {
+	      h -> getParent() -> setLeft(child);
       }
-      else{
-        h->getParent()->setRight(child);
+      else {
+        h -> getParent() -> setRight(child);
       }
       delete h;
-      child->setParent(h->getParent());
-      if (bothAreBlack){
-        fixDBlack(child);
-      }
-      else{
-        if (child->isRed()){
-          child->toggleColor();
-        }
+      child -> setParent(h -> getParent());
+      if (bothAreBlack) {
+	      fixDoubleBlack(child);
+      } 
+      else {   //No double black, recolor suffices
+        if (child -> isRed()) child -> toggleColor();
       }
     }
-    else{
-      if (root == h){
-        root = NULL;
-        delete h;
-      }
-      else{
-        if (!h->isRed()){
-          fixDBlack(h);
+  }
+  else {
+    if (root == h) {
+      root = NULL;
+      delete h;
+    } 
+    else {
+      if (!h -> isRed()){
+	      fixDoubleBlack(h);
+      } 
+      else {             //No double black
+	      if (h -> getSibling() != NULL && !h -> getSibling() -> isRed()){
+          h -> getSibling() -> toggleColor();
         }
-        else{
-          if (h->getSibling() != NULL && !h->getSibling()->isRed()){
-            h->getSibling()->toggleColor();
-          }
-      if (h->getParent()->getLeft() == h){
-        h->getParent()->setLeft(NULL);
+      }
+      if (h -> getParent() -> getLeft() == h){
+        h -> getParent() -> setLeft(NULL);
       }
       else{
-        h->getParent()->setRight(NULL);
+        h -> getParent() -> setRight(NULL);
       }
       delete h;
     }
   }
   return true;
 }
+
+void RBT::fixDoubleBlack(Node* n){
+  if (root == n){
+    return;
+  }
+  Node* sibling = n->getSibling();
+  Node* parent = n->getParent();
+  if (sibling == NULL){
+    fixDoubleBlack(parent);
+  }
+  else{
+    if (sibling->isRed()){
+      if (!parent->isRed()){
+        parent->toggleColor();
+      }
+      sibling->toggleColor();
+      if (sibling == parent->getLeft()){
+        rotateRight(parent);
+      }
+      else{
+        rotateLeft(parent);
+      }
+      fixDoubleBlack(n);
+    }
+    else{
+      if (sibling->getLeft() && sibling->getLeft()->isRed() || sibling->getRight() && sibling->getRight()->isRed()){
+        if (sibling->getLeft() && sibling->getLeft()->isRed()){
+          if (sibling->getParent()->getLeft() == sibling){
+            if (sibling->getLeft()->isRed() != sibling->isRed()){
+              sibling->getLeft()->toggleColor();
+            }
+            if (sibling->isRed() != sibling->getParent()->isRed()){
+              sibling->toggleColor();
+            }
+            rotateRight(parent);
+          }
+          else{
+            if (sibling->getLeft()->isRed() != sibling->getParent()->isRed()){
+              sibling->getLeft()->toggleColor();
+            }
+            rotateRight(sibling);
+            rotateLeft(parent);
+          }
+        }
+        else{
+          if (sibling->getParent()->getLeft() == sibling){
+            if (sibling -> getRight() -> isRed() != sibling -> getParent() -> isRed()){
+              sibling -> getRight() -> toggleColor();
+            }
+	          rotateLeft(sibling);
+	          rotateRight(parent);
+          }
+          else {
+	          if (sibling -> getRight() -> isRed() != sibling -> isRed()){
+              sibling -> getRight() -> toggleColor();
+            }
+	          if (sibling -> isRed() != sibling -> getParent() -> isRed()){
+              sibling -> toggleColor();
+            }
+	          rotateLeft(parent);
+	        }
+	      }
+        if (parent -> isRed()){
+          parent -> toggleColor();
+        }
+      } 
+      else{
+	      if (!sibling -> isRed()){
+          sibling -> toggleColor();
+        }
+	      if (!parent -> isRed()){
+	        fixDoubleBlack(parent);
+	      } 
+      else {
+	      parent -> toggleColor();
+      }
+    }
+	}
+}
+
 void RBT::fixTree(Node* n){
   if (n == NULL){
     return;
