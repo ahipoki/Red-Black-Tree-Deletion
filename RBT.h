@@ -4,21 +4,21 @@
 
 class RBT{
   public:
-    RBT();
-    void Insert(int);
-    void PrintTree();
-    bool Search(int);
-    void RemoveNode(int);
-    ~RBT();
+    RBT();//Constructor
+    void Insert(int);//Public Insert
+    void PrintTree();//Public PrintTree
+    bool Search(int);//Public Searc
+    void RemoveNode(int);//Public RemoveNode
+    ~RBT();//Destructor
   private:
-    Node* root;
-    void Insert(Node*&, Node*);
-    void PrintTree(Node*, int);
-    bool Search(Node*, int);
-    bool RemoveNode(Node*&, Node*);
-    void fixDoubleBlack(Node*);
-    void fixTree(Node*);
-    void deleteTree(Node*);
+    Node* root;//Root node
+    void Insert(Node*&, Node*);//Private Insert
+    void PrintTree(Node*, int);//Private PrintTree
+    bool Search(Node*, int);//Private Search
+    bool RemoveNode(Node*&, Node*);//Private RemoveNode
+    void fixDoubleBlack(Node*);//Fix double black
+    void fixTree(Node*);//Fix tree
+    void deleteTree(Node*);//Delete tree
 };
 
 #endif
