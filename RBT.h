@@ -16,6 +16,7 @@ class RBT{
     void PrintTree(Node*, int);
     bool Search(Node*, int);
     bool RemoveNode(Node*&, Node*);
+    void fixDoubleBlack(Node*);
     void fixTree(Node*);
     void deleteTree(Node*);
 };
