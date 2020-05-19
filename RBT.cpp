@@ -70,10 +70,8 @@ bool RBT::Search(Node* h, int d){//Private Search function
   }
 }
 
-void RBT::RemoveNode(int in){//Public RemoveNode function
-  if (RemoveNode(root, in)){//If the node was removed through private RemoveNode function with root and in
-    cout<<"Node deleted"<<endl;//Tell the user the node was deleted
-  }
+bool RBT::RemoveNode(int in){//Public RemoveNode function
+  return RemoveNode(root, in);
 }
 
 bool RBT::RemoveNode(Node* &h, int n){//Private RemoveNode function
@@ -229,6 +227,7 @@ void RBT::fixDoubleBlack(Node* n){//Fix double black
     }
   }
 }
+}
 
 void RBT::fixTree(Node* n){//Fix tree
   if (n == NULL){//If n is NULL
@@ -304,4 +303,27 @@ void RBT::deleteTree(Node* n){//Delete tree
   deleteTree(n->getLeft());//Delete left side
   deleteTree(n->getRight());//Delete right side
   delete n;//Delete root
+}
+
+void RBT::rotateLeft(Node* h){
+  Node* newp = h->getRight();
+  Node* p = h->getParent();
+  if (h == root){
+    root = newp;
+  }
+  h->setRight(newp->getLeft());
+  newp->setLeft(h);
+  h->setParent(newp);
+  if (h->getRight() != NULL){
+    h->getRight()->setParent(h);
+  }
+  if (p != NULL){
+    if (h == p->getLeft()){
+      p->setLeft(newp);
+    }
+    else{
+      p->setRight(newp);
+    }
+  }
+  newp->setParent(p);
 }
