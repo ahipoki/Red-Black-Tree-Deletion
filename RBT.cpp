@@ -175,7 +175,7 @@ void RBT::fixDoubleBlack(Node* n){//Fix double black
       fixDoubleBlack(n);//Fix double black with n
     }
     else{//Anything else
-      if (sibling->getLeft() && sibling->getLeft()->isRed() || sibling->getRight() && sibling->getRight()->isRed()){//If sibling's left node and sibling's left node is red or sibling's right node and sibling's right node is red
+      if ((sibling->getLeft() && sibling->getLeft()->isRed()) || (sibling->getRight() && sibling->getRight()->isRed())){//If sibling's left node and sibling's left node is red or sibling's right node and sibling's right node is red
         if (sibling->getLeft() && sibling->getLeft()->isRed()){//If sibling's left node and sibling's left node is red
           if (sibling->getParent()->getLeft() == sibling){//If sibling's parent's left node is sibling
             if (sibling->getLeft()->isRed() != sibling->isRed()){//If sibling's left node is red does not equal sibling is red
