@@ -36,7 +36,7 @@ int main()
       //Call insert
     }
     else if (strcmp(input, "READ") == 0){//If they said READ
-      Read(rbt*);
+      Read(rbt);
       //Call read
     }
     else if (strcmp(input, "PRINT") == 0){//If they said PRINT
