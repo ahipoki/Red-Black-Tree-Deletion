@@ -8,17 +8,19 @@ class RBT{
     void Insert(int);//Public Insert
     void PrintTree();//Public PrintTree
     bool Search(int);//Public Searc
-    void RemoveNode(int);//Public RemoveNode
+    bool RemoveNode(int);//Public RemoveNode
     ~RBT();//Destructor
   private:
     Node* root;//Root node
     void Insert(Node*&, Node*);//Private Insert
     void PrintTree(Node*, int);//Private PrintTree
     bool Search(Node*, int);//Private Search
-    bool RemoveNode(Node*&, Node*);//Private RemoveNode
+    bool RemoveNode(Node*&, int);//Private RemoveNode
     void fixDoubleBlack(Node*);//Fix double black
     void fixTree(Node*);//Fix tree
     void deleteTree(Node*);//Delete tree
+    void rotateLeft(Node*);
+    void rotateRight(Node*);
 };
 
 #endif
