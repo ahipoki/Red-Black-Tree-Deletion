@@ -292,10 +292,6 @@ void RBT::PrintTree(Node* h, int d){//Private PrintTree function
   PrintTree(h->getRight(), d+1);//Private PrintTree function with h's right node and d+1
 }
 
-RBT::~RBT(){//Destructor
-  deleteTree(root);//Call deleteTree
-}
-
 void RBT::deleteTree(Node* n){//Delete tree
   if (!n){//If not n
     return;//Return
@@ -326,4 +322,31 @@ void RBT::rotateLeft(Node* h){
     }
   }
   newp->setParent(p);
+}
+
+void RBT::rotateRight(Node* h){
+  Node* newp = h->getLeft();
+  Node* p = h->getParent();
+  if (h == root){
+    root = newp;
+  }
+  h->setLeft(newp->getRight());
+  newp->setRight(h);
+  h->setParent(newp);
+  if (h->getLeft() != NULL){
+    h->getLeft()->setParent(h);
+  }
+  if (p != NULL){
+    if (h == p->getLeft()){
+      p->setLeft(newp);
+    }
+    else{
+      p->setRight(newp);
+    }
+  }
+  newp->setParent(p);
+}
+
+RBT::~RBT(){//Destructor
+  deleteTree(root);//Call deleteTree
 }
