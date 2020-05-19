@@ -19,8 +19,8 @@ class RBT{
     void fixDoubleBlack(Node*);//Fix double black
     void fixTree(Node*);//Fix tree
     void deleteTree(Node*);//Delete tree
-    void rotateLeft(Node*);
-    void rotateRight(Node*);
+    void rotateLeft(Node*);//Rotate left
+    void rotateRight(Node*);//Rotate right
 };
 
 #endif
