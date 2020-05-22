@@ -213,7 +213,7 @@ void RBT::fixDoubleBlack(Node* n){//Fix double black
         if (parent->isRed()){//If parent is red
           parent->toggleColor();//Change parent's color
         }
-      } 
+      }
       else{//Anything else
       	if (!sibling->isRed()){//If sibling is black
           sibling->toggleColor();//Change sibling's color
@@ -221,12 +221,12 @@ void RBT::fixDoubleBlack(Node* n){//Fix double black
 	if (!parent->isRed()){//If parent is black
 	  fixDoubleBlack(parent);//Fix double black with parent
 	}
-      else{//Anything else
-      	parent -> toggleColor();//Change parent's color
+        else{//Anything else
+      	  parent -> toggleColor();//Change parent's color
+        }
       }
     }
   }
-}
 }
 
 void RBT::fixTree(Node* n){//Fix tree
